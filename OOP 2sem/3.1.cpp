@@ -1,48 +1,31 @@
+//Компоненты файла f – целые числа.Получить файл g из чисел исходного
+//файла, в котором записаны сначала все четные числа, затем все нечетные числа.
+
 #include <iostream>
 #include <fstream>
-#include <vector>
 
 using namespace std;
 
-void readFromFile(const string& filename, vector<int>& numbers) {
-    ifstream file(filename);
+void SplitNumbers(const string& infilename, const string& outfilename) 
+{
+    ifstream infile(infilename);
+    ofstream outfile(outfilename);
+    outfile.clear();
     int num;
-    while (file >> num) {
-        numbers.push_back(num);
+    while (infile >> num)
+    {
+        if (num % 2 == 0) outfile << num << " ";
+    }
+    infile.clear();
+    infile.seekg(0, ios::beg);
+    while (infile >> num)
+    {
+        if (!(num % 2 == 0)) outfile << num << " ";
     }
 }
 
-void writeToFile(const string& filename, const vector<int>& numbers) {
-    ofstream file(filename);
-    file.clear();
-    for (auto i = 0; i < numbers.size(); ++i) {
-        file << numbers[i] << " ";
-    }
-}
-
-void splitNumbers(const vector<int>& numbers, vector<int>& evenNumbers, vector<int>& oddNumbers) {
-    for (auto i = 0; i < numbers.size(); ++i) {
-        if (numbers[i] % 2 == 0) {
-            evenNumbers.push_back(numbers[i]);
-        }
-        else {
-            oddNumbers.push_back(numbers[i]);
-        }
-    }
-}
-
-int main() {
-    vector<int> numbers;
-    readFromFile("input.txt", numbers);
-
-    vector<int> evenNumbers, oddNumbers;
-    splitNumbers(numbers, evenNumbers, oddNumbers);
-
-    for (auto i = 0; i < oddNumbers.size(); ++i) {
-        evenNumbers.push_back(oddNumbers[i]);
-    }
-
-    writeToFile("out_put.txt", evenNumbers);
-
+int main() 
+{
+    SplitNumbers("input.txt","out_put.txt");
     return 0;
 }
