@@ -4,10 +4,11 @@
 using  namespace std;
 
 void Vector::SetSize(int s) {
-	int size = s;
+    this->size = s;
 	delete[] elements;
-	elements = new int[size];
+	this->elements = new int[size];
 }
+
 int Vector::GetSize() {
     return size;
 }

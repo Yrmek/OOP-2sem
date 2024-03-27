@@ -66,14 +66,7 @@ public:
         return elements[index];
     }
 
-    const int& operator[](int index) const {
-        if (index < 0 || index >= size) {
-            throw;
-        }
-        return elements[index];
-    }
-
-    friend ostream& operator<<(ostream& os, const Vector& vec) {
+    friend ostream& operator<<(ostream& os, Vector& vec) {
         for (int i = 0; i < vec.size; ++i) {
             os << vec.elements[i] << " ";
         }

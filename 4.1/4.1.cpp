@@ -46,6 +46,7 @@ int get_paired_numbers(Vector arr, Vector if_pair, int arr_size, int max_num_siz
 		break;
 	default:   return 0;
 	}
+
 	cout << endl << "Array of paired numbers" << endl;
 	for (int i = max_num_size - 1; i >= 0; i--)
 	{
@@ -54,15 +55,28 @@ int get_paired_numbers(Vector arr, Vector if_pair, int arr_size, int max_num_siz
 	}
 	return 0;
 }
+
+Vector SomeFunc(Vector a)
+{
+	Vector b = a ;
+	return b;
+}
+
 int main()
 {
 	int arr_size = 10e09;
 	cout << "Enter an array size:" << endl;
 	cin >> arr_size;
 	int max_num_size = 100;
-
+	int a[]{ 1,2,3,4,5,6,7,8,9,10 };
 	Vector if_pair (max_num_size,0);
-	Vector sequence(arr_size);
+	Vector sequence = *a;
+	Vector test_vector(arr_size);
+	sequence.SetSize(arr_size);
+	sequence.FillRand();
+	test_vector = SomeFunc(sequence);
+	cout <<"Size of sequence :" << sequence.GetSize();
+
 	get_paired_numbers(sequence, if_pair, arr_size, max_num_size);
 	return 0;
 }

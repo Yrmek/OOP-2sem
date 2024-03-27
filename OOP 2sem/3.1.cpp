@@ -3,14 +3,26 @@
 
 #include <iostream>
 #include <fstream>
+#include <time.h>
 
 using namespace std;
 
 void SplitNumbers(const string& infilename, const string& outfilename) 
 {
-    ifstream infile(infilename);
-    ofstream outfile(outfilename);
-    outfile.clear();
+    fstream infile(infilename,ios::trunc);
+    ofstream outfile(outfilename, ios::trunc);
+
+    int n = 0;
+    cout << "Enter amount n of numbers in file :" << endl;
+    cin >> n;
+    if (n < 0) return;
+    for (int i = 0; i < n; ++i)
+    {
+        infile << rand() % 1000 << " ";
+    }
+    infile.clear();
+    infile.seekg(0, ios::beg);
+
     int num;
     while (infile >> num)
     {
@@ -18,6 +30,7 @@ void SplitNumbers(const string& infilename, const string& outfilename)
     }
     infile.clear();
     infile.seekg(0, ios::beg);
+
     while (infile >> num)
     {
         if (!(num % 2 == 0)) outfile << num << " ";
