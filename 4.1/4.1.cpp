@@ -64,6 +64,15 @@ Vector SomeFunc(Vector a)
 
 int main()
 {
+	Vector appendtest(10, 0);
+	appendtest[20] = 10;
+	appendtest.Append(5);
+	cout << "Append test" << endl;
+	appendtest.Print();
+	appendtest.Append(7);
+	appendtest.Append(1);
+	appendtest.Print();
+
 	int arr_size = 10e09;
 	cout << "Enter an array size:" << endl;
 	cin >> arr_size;
@@ -75,7 +84,7 @@ int main()
 	sequence.SetSize(arr_size);
 	sequence.FillRand();
 	test_vector = SomeFunc(sequence);
-	cout <<"Size of sequence :" << sequence.GetSize();
+	cout << "Size of sequence :" << sequence.GetSize() << endl;
 
 	get_paired_numbers(sequence, if_pair, arr_size, max_num_size);
 	return 0;

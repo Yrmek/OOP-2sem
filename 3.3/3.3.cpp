@@ -5,8 +5,9 @@
 //—формировать файл из этих студентов.
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
-#include <string>
+#include <time.h>
 
 using namespace std;
 struct Student
@@ -15,19 +16,28 @@ struct Student
 	int age;
 	char sex;
 	int course;
-	int perfomance;
+	int performance;
 
 	void ShowData()
 	{
-		cout << "Name " << name << endl
-			<< "Age " << age
+		cout << endl;
+		int i = 0;
+		while (name[i] != 0) {
+			cout << name[++i];
+		}
+		cout << endl;
+		cout << "Age : " << age << endl
+			<< "Sex : " << sex << endl
+			<< "Course : " << course << endl
+			<< "Performance : " << performance << endl;
 	}
 };
 
+
 void main()
 {
-	fstream studbase("StudBase.txt", ios::in | ios::out | ios::binary | ios::trunc);
-	fstream failbase("FailBase.txt", ios::in | ios::out | ios::binary | ios::trunc);
+	fstream studbase("StudBase.txt", ios::in | ios::out | ios::binary );
+	fstream failbase("FailBase.txt", ios::in | ios::out | ios::binary );
 	
 
 }
