@@ -4,19 +4,20 @@ using namespace std;
 
 template < class T>
 class LinkedList {
+    struct Node {
+        T data;
+        Node* next;
+    };
 public:
-	struct Node {
-		T data;
-		Node* next;
-	};
 	Node head;
 
 	//конструкторы
-	LinkedList : head(nullptr) {}
-	LinkedList(T data) {
-		head = new Node;
+LinkedList() : head(nullptr) {}
+	LinkedList(const T& data){
+		Node* head = new Node;
 		head->data = data;
 		head->next = nullptr;
+        this->head = *head;
 	}
 
     LinkedList(const LinkedList& other) : head(other.head) {} //конструктор копирования
@@ -42,33 +43,34 @@ public:
 
 	//деструктор
 	~LinkedList() {
-		Node* current = head;
+		Node* current = &head;
 		while (current) {
 			Node* next = current->next;
 			delete current;
 			current = next;
 		}
 	}
-    void initialize(T data) {
-        head = new Node;
+    void initialize(const T& data) {
+        Node* head = new Node;
         head->data = data;
         head->next = nullptr;
+        this->head = *head;
     }
 
-    void add( T data) {
-        if (!head) {
+    void add(const T& data) {
+        if (!&head) {
             initialize(data);
         }
         else {
             Node* newNode = new Node;
             newNode->data = data;
-            newNode->next = head;
-            head = newNode;
+            newNode->next = &head;
+            this->head = newNode;
         }
     }
 
-    void remove(T key) {
-        Node* current = head;
+    void remove(const T& key) {
+        Node* current = &head;
         Node* prev = nullptr;
 
         while (current) {
@@ -77,7 +79,7 @@ public:
                     prev->next = current->next;
                 }
                 else {
-                    head = current->next;
+                    head = *(current->next);
                 }
                 delete current;
                 break;
@@ -85,6 +87,14 @@ public:
             prev = current;
             current = current->next;
         }
+    }
+    void display() {
+        Node* current = &head;
+        while (current) {
+            cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
     }
 
     Node* search(const T& key) {
@@ -98,24 +108,14 @@ public:
         return nullptr;
     }
 
-    void display() {
-        Node* current = head;
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
-        }
-        cout << std::endl;
-    }
+   
 
     void clear() {
-        Node* current = head;
+        Node* current = &head;
         while (current) {
             Node* next = current->next;
             delete current;
             current = next;
         }
-        head = nullptr;
     }
-};
-
 };

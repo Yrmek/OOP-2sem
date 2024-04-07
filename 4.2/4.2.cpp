@@ -3,6 +3,11 @@ using namespace std;
 
 void main()
 {
-	LinkedList list(10);
-	list.dislay();
+	LinkedList<int> list(10);
+	list.add(12);
+	list.add(14);
+	list.add(16);
+	list.add(18);
+	list.remove(16);
+	list.display();
 }
