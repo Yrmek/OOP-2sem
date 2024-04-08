@@ -17,7 +17,7 @@ public:
         elements = new int[capacity]{f};
     }
 
-	~Vector() { delete[] elements; } // деструктор 
+	~Vector() { delete[] elements;  cout << "Test destructor : OK" << endl;} // деструктор 
 
     // правило 5
 
@@ -26,6 +26,7 @@ public:
         for (int i = 0; i < size; ++i) {
             elements[i] = other.elements[i];
         }
+        cout << "Test copy constructor: OK" << endl;
     }
 
     Vector& operator=(const Vector& other) {  // оператор копировния
@@ -38,6 +39,7 @@ public:
                 elements[i] = other.elements[i];
             }
         }
+        cout << "Test operator by copy: OK" << endl;
         return *this;
     }
 
@@ -45,6 +47,7 @@ public:
         other.elements = nullptr;
         other.size = 0;
         other.capacity = 0;
+        cout << "Test move constructor: OK" << endl;
     }
 
     Vector& operator=(Vector&& other)  {  // оператор перемещения
@@ -53,6 +56,7 @@ public:
             swap(capacity, other.capacity);
             swap(elements, other.elements);
         }
+        cout << "Test operator by move: OK" << endl;
         return *this;
     }
 

@@ -62,28 +62,38 @@ Vector SomeFunc(Vector a)
 	return b;
 }
 
-int main()
+void TestClass()
 {
+	int arr_size = 10;
 	Vector appendtest(10, 0);
-	appendtest[20] = 10;
 	appendtest.Append(5);
 	cout << "Append test" << endl;
 	appendtest.Print();
 	appendtest.Append(7);
 	appendtest.Append(1);
 	appendtest.Print();
+	int a[]{ 1,2,3,4,5,6,7,8,9,10 };
+	Vector sequence = *a;
+	Vector test_vector(arr_size);
+	Vector test2(arr_size);
+	test2 = sequence;
+	test_vector = SomeFunc(sequence);
+	test_vector = move(sequence);
+	Vector test3(move(test2));
+}
 
+int main()
+{
+	TestClass();
 	int arr_size = 10e09;
 	cout << "Enter an array size:" << endl;
 	cin >> arr_size;
 	int max_num_size = 100;
-	int a[]{ 1,2,3,4,5,6,7,8,9,10 };
 	Vector if_pair (max_num_size,0);
-	Vector sequence = *a;
-	Vector test_vector(arr_size);
+	int a[]{ 1,2,3,4,5,6,7,8,9,10 };
+	Vector sequence = *a ;
 	sequence.SetSize(arr_size);
 	sequence.FillRand();
-	test_vector = SomeFunc(sequence);
 	cout << "Size of sequence :" << sequence.GetSize() << endl;
 
 	get_paired_numbers(sequence, if_pair, arr_size, max_num_size);
