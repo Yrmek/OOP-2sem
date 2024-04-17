@@ -50,7 +50,7 @@ public:
         cout << "Test move constructor: OK" << endl;
     }
 
-    Vector& operator=(Vector&& other)  {  // оператор перемещения
+    Vector& operator=(Vector&& other) {  // оператор перемещения
         if (this != &other) {
             swap(size, other.size);
             swap(capacity, other.capacity);
