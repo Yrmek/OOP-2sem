@@ -13,16 +13,16 @@ void fill_list(LinkedList<char>&, int);
 
 void deleteSublist(LinkedList<char>& top, LinkedList<char>& top1)
 {
-	LinkedList<char>::Node* current;
-	current = top.head;
-	LinkedList<char>::Node* prev = nullptr;
+	Node<char>* current;
+	current = top.getHead();
+	Node<char>* prev = nullptr;
 
 	while (current != nullptr)
 	{
-		if (current->data == top1.head->data)
+		if (current->data == top1.getHead()->data)
 		{
-			LinkedList<char>::Node* tempMain = current;
-			LinkedList<char>::Node* tempSub = top1.head;
+			Node<char>* tempMain = current;
+			Node<char>* tempSub = top1.getHead();
 
 			while (tempMain != nullptr && tempSub != nullptr && tempMain->data == tempSub->data)
 			{
@@ -34,8 +34,8 @@ void deleteSublist(LinkedList<char>& top, LinkedList<char>& top1)
 			{
 				if (prev == nullptr)
 				{
-					top.head = tempMain;
-					current = top.head;
+					top.getHeadRef() = tempMain;
+					current = top.getHead();
 				}
 				else
 				{
@@ -52,18 +52,10 @@ void deleteSublist(LinkedList<char>& top, LinkedList<char>& top1)
 	}
 	
 }
-void TestClass()
-{
-	LinkedList<int> list2(42);
-	LinkedList<int> list3(list2);
-	LinkedList<int> list4(move(list3));
-	LinkedList<int> list1(1);
-	list1 = list2;
-	list1 = move(list2);
-}
+
 int main()
 {
-	TestClass();
+	/*TestClass();*/
 	srand(time(NULL));
 	cout << "Enter quantity of elements in lists" << endl;
 	int quantity;
@@ -89,24 +81,26 @@ int main()
 
 void fill_list(LinkedList<char>& top, int quantity)
 {
+	Node<char>* current = top.getHead();
+	Node<char>* newNode = NULL;
 	for (int i = 0; i < quantity; i++) {
-		LinkedList<char>::Node* ppv = NULL;
-		LinkedList<char>::Node* nv = new LinkedList<char>::Node;
-		cin >> nv->data; //rand() % 25 + 65;
-		nv->next = NULL;
-		if (!top.head)
-			top.head = nv;
-		else
-		{
-			nv->next = top.head;
-			top.head = nv;
+		newNode = new Node<char>;
+		cin >> newNode->data; //rand() % 25 + 65;
+		newNode->next = NULL;
+		if (!current) {
+			top.getHeadRef() = newNode;
+			current = top.getHead();
+		}
+		else {
+			current->next = newNode;
+			current = newNode;
 		}
 	}
 }
 
 void print_list(LinkedList<char>& top)
 {
-	LinkedList<char>::Node* current = top.head;
+	Node<char>* current = top.getHead();
 	while (current) {
 		cout << current->data << " ";
 		current = current->next;

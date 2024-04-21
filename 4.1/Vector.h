@@ -29,19 +29,7 @@ public:
         cout << "Test copy constructor: OK" << endl;
     }
 
-    Vector& operator=(const Vector& other) {  // оператор копировния
-        if (this != &other) {
-            delete[] elements;
-            size = other.size;
-            capacity = other.capacity;
-            elements = new int[capacity];
-            for (int i = 0; i < size; ++i) {
-                elements[i] = other.elements[i];
-            }
-        }
-        cout << "Test operator by copy: OK" << endl;
-        return *this;
-    }
+    Vector& operator=(const Vector& other);
 
     Vector(Vector&& other) : elements(other.elements), size(other.size) , capacity(other.capacity) { // конструктор перемещения 
         other.elements = nullptr;
@@ -50,15 +38,7 @@ public:
         cout << "Test move constructor: OK" << endl;
     }
 
-    Vector& operator=(Vector&& other) {  // оператор перемещения
-        if (this != &other) {
-            swap(size, other.size);
-            swap(capacity, other.capacity);
-            swap(elements, other.elements);
-        }
-        cout << "Test operator by move: OK" << endl;
-        return *this;
-    }
+    Vector& operator=(Vector&& other);
 
     // методы
     void SetSize(int s);
@@ -67,27 +47,7 @@ public:
     void Append(int val);
     void AllocMem(int newsize);
     void Print();
-
-    // перегрузка операторов
-    
-    int& operator[](int index) {
-        if (index < 0 || index >= size) {
-            throw ("Index out of Bounds");
-        }
-        return elements[index];
-    }
-
-    friend ostream& operator<<(ostream& os, Vector& vec) {
-        for (int i = 0; i < vec.size; ++i) {
-            os << vec.elements[i] << " ";
-        }
-        return os;
-    }
-
-    friend istream& operator>>(istream& is, Vector& vec) {
-        for (int i = 0; i < vec.size; ++i) {
-            is >> vec.elements[i];
-        }
-        return is;
-    }
+    int& operator[](int index);
+    friend ostream& operator<<(ostream& os, Vector& vec);
+    friend istream& operator>>(istream& is, Vector& vec);
 };

@@ -37,11 +37,53 @@ void Vector::AllocMem(int newsize) {
         delete[] elements;
         elements = newelements;
         capacity = newcapacity;
-    } 
+    }
 }
 
 void Vector::Append(int val) {
     AllocMem(size + 1);
     elements[size] = val;
     size++;
+}
+
+int& Vector:: operator[](int index) {
+    if (index < 0 || index >= size) {
+        throw ("Index out of Bounds");
+    }
+    return elements[index];
+}
+
+ostream& operator<<(ostream& os, Vector& vec) {
+    for (int i = 0; i < vec.size; ++i) {
+        os << vec.elements[i] << " ";
+    }
+    return os;
+}
+
+istream& operator>>(istream& is, Vector& vec) {
+    for (int i = 0; i < vec.size; ++i) {
+        is >> vec.elements[i];
+    }
+    return is;
+}
+Vector& Vector::operator=(Vector&& other) {  // оператор перемещения
+    if (this != &other) {
+        swap(size, other.size);
+        swap(capacity, other.capacity);
+        swap(elements, other.elements);
+    }
+    return *this;
+}
+
+Vector& Vector::operator=(const Vector& other) {  // оператор копировния
+    if (this != &other) {
+        delete[] elements;
+        size = other.size;
+        capacity = other.capacity;
+        elements = new int[capacity];
+        for (int i = 0; i < size; ++i) {
+            elements[i] = other.elements[i];
+        }
+    }
+    return *this;
 }

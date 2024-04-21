@@ -2,19 +2,22 @@
 #include <iostream>
 using namespace std;
 
+template <class T>
+struct Node {
+    T data;
+    Node* next;
+};
+
 template < class T>
 class LinkedList {
+private:
+	Node<T>* head;
+    Node<T>* tail;
 public:
-    struct Node {
-        T data;
-        Node* next;
-    };
-	Node* head;
-
 	//конструкторы
 LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl; }
 	LinkedList(const T& data){
-		Node* head = new Node;
+		Node<T>* head = new Node<T>;
 		head->data = data;
 		head->next = nullptr;
         this->head = head;
@@ -23,7 +26,7 @@ LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl
 
     LinkedList(const LinkedList& other) : head(nullptr) {
         if (other.head != nullptr) {
-            Node* current = other.head;
+            Node<T>* current = other.head;
             while (current != nullptr) {
                 add(current->data);
                 current = current->next;
@@ -32,11 +35,18 @@ LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl
         }
     } //конструктор копирования
 
-    LinkedList& operator= (const LinkedList& other) { // оператор копирования 
+    
+
+    LinkedList(LinkedList&& other) : head(other.head) { // конструктор перемещения
+        other.head = nullptr;
+        cout << "Test move constructor: OK" << endl;
+    }
+
+    LinkedList& operator= (const LinkedList& other) { 
         if (this != &other) {
             head = nullptr;
             if (other.head != nullptr) {
-                Node* current = other.head;
+                Node<T>* current = other.head;
                 while (current != nullptr) {
                     add(current->data);
                     current = current->next;
@@ -47,12 +57,7 @@ LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl
         return *this;
     }
 
-    LinkedList(LinkedList&& other) : head(other.head) { // конструктор перемещения
-        other.head = nullptr;
-        cout << "Test move constructor: OK" << endl;
-    }
-
-    LinkedList& operator=(LinkedList&& other) { //оператор перемещения
+    LinkedList& operator=(LinkedList&& other) { 
         if (this != &other) {
             swap(head, other.head);
         }
@@ -60,81 +65,29 @@ LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl
         return *this;
     }
 
+
+    Node<T>* getHead() const {
+        return head;
+    }
+
+    Node<T>*& getHeadRef() {
+        return head;
+    }
+
+    void initialize(const T& data);
+    void add(const T& data);
+    void print();
+    Node<T>* search(const T& key);
+    void clear();
+
 	//деструктор
 	~LinkedList() {
-		Node* current = head;
+		Node<T>* current = head;
 		while (current) {
-			Node* next = current->next;
+			Node<T>* next = current->next;
 			delete current;
 			current = next;
 		}
         cout << "Test destructor : OK" << endl;
 	}
-    void initialize(const T& data) {
-        Node* head = new Node;
-        head->data = data;
-        head->next = nullptr;
-        this->head = head;
-    }
-
-    void add(const T& data) {
-        if (!head) {
-            initialize(data);
-        }
-        else {
-            Node* newNode = new Node;
-            Node* buf = head;
-            newNode->data = data;
-            newNode->next = head;
-            head = newNode;
-        }
-    }
-
-    void remove(const T& key) {
-        Node* current = head;
-        Node* prev = nullptr;
-
-        while (current) {
-            if (current->data == key) {
-                if (prev) {
-                    prev->next = current->next;
-                }
-                else {
-                    head = current->next;
-                }
-                delete current;
-                break;
-            }
-            prev = current;
-            current = current->next;
-        }
-    }
-    void display() {
-        Node* current = head;
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
-        }
-        cout << endl;
-    }
-
-    Node* search(const T& key) {
-        Node* current = head;
-        while (current) {
-            if (current->data == key) {
-                return current;
-            }
-            current = current->next;
-        }
-        return nullptr;
-    }
-
-    void clear() {
-        Node* current = head;
-        while (current) {
-            Node* next = current->next;
-            delete[] current;
-            current = next;
-        }
-    }
 };
