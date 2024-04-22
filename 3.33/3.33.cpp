@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <vector>
 #include <string.h>
 #include <fstream>
 #include <time.h>
@@ -13,7 +14,8 @@
 using namespace std;
 
 const int NAME = 10;         // количество имен в массиве
-const char* names[NAME] = { "Саша", "Паша", "Коля", "Юра", "Семен", "Артем", "Петя", "Оля", "Лена", "Даша", };
+const char* names[NAME] = { "Алекснадр", "Павел", "Константин", "Юрий", "Влад", "Виталий", "Петр", "Ольга", "Елена", "Дарья", };
+const char* surnames[NAME] = { " Бубылда", " Заводской" , " Дотер", " Бревно" , " Цаль", " Бумага" , " Пельмень", " Пахом", " Капуста2004" , " Майнкрафтер" };
 
 struct Student
 {
@@ -35,6 +37,19 @@ struct Student
 	}
 };
 
+void readFromFile(const string& fileName, vector<Student>& students, int& size) {
+	ifstream infile(fileName, ios::binary);
+	if (!infile.is_open()) {
+		return;
+	}
+	Student student;
+	size = 0;
+	while (infile.read(reinterpret_cast<char*>(&student), sizeof(Student))) {
+		students[size++] = student;
+	}
+	infile.close();
+}
+
 void AddRecord(const string& fileName, const Student& student) {
 	fstream file(fileName, ios::binary| ios::in| ios::out| ios::app);
 	if (!file.is_open()) {
@@ -44,16 +59,16 @@ void AddRecord(const string& fileName, const Student& student) {
 	file.close();
 }
 
-void FindFailStuds(const string& infileName , const string& outfileName, int course , int min_performance) {
-	ifstream infile(infileName, ios::binary );
-	ofstream outfile(outfileName, ios::binary );
-	Student student;
-	while (infile.read(reinterpret_cast<char*>(&student), sizeof(Student))) {
-		if (student.course == course && student.performance < min_performance)
-			outfile.write(reinterpret_cast<char*>(&student), sizeof(Student));
+void FindFailStuds(const string& infileName, const string& outfileName, int course, int min_performance, int stud_amount) {
+	vector<Student> students (stud_amount);
+	Student stud;
+	readFromFile(infileName, students, stud_amount);
+	for (int i = 0; i < stud_amount; ++i) {
+		if (students[i].course == course && students[i].performance < min_performance) {
+			stud = students[i];
+			AddRecord(outfileName, stud);
+		}
 	}
-	infile.close();
-	outfile.close();
 }
 
 void ViewFile(const string& fileName) {
@@ -74,6 +89,7 @@ void FillBase(const string& infilename, int amount)
 		Student student;
 		int name = rand() % NAME;
 		strcpy_s(student.name,names[name]);
+		strcat_s(student.name, surnames[rand() % NAME]);
 		student.age = rand() % 4 + 17;
 		if (name == 7 || name == 8 || name == 9) student.sex = 'f';
 		else student.sex = 'm';
@@ -101,7 +117,7 @@ void main()
 	cout << "List of students :" << endl;
 	ViewFile("input.bin");
 	cout << "_____________________________" << endl;
-	FindFailStuds("input.bin", "output.bin", course, min_perf);
+	FindFailStuds("input.bin", "output.bin", course, min_perf, stud_amount);
 	ViewFile("output.bin");
 	infile.close();
 	outfile.close();

@@ -65,7 +65,6 @@ LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl
         return *this;
     }
 
-
     Node<T>* getHead() const {
         return head;
     }
