@@ -13,6 +13,7 @@ class LinkedList {
 private:
 	Node<T>* head;
     Node<T>* tail;
+
 public:
 	//конструкторы
 LinkedList() : head(nullptr) { cout << "Test constructor by default: OK" << endl; }

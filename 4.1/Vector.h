@@ -7,7 +7,11 @@ class Vector {
 	int* elements;
 	int size;
     int capacity;
+
+    void ReallocMem(int newsize);
+
 public:
+
 	Vector() : elements(nullptr), size(0), capacity (0) {} //конструкторы
 
 	Vector(int s) : size(s) , capacity(s) {
@@ -45,7 +49,6 @@ public:
     int GetSize();
     void FillRand();
     void Append(int val);
-    void AllocMem(int newsize);
     void Print();
     int& operator[](int index);
     friend ostream& operator<<(ostream& os, Vector& vec);

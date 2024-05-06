@@ -22,11 +22,14 @@ string getNewString(vector<string> words) {
             else {
                 istrue = 1;
             }
-             buf = j;
+            buf = j;
         }
-        if (istrue){ output.append(i);
-        output.append(" ");
+        if (istrue) {
+            output.append(i);
+            output.append(" ");
+        }
     }
+    return output;
 }
 
 vector<string> getWords(string input) {
@@ -43,6 +46,8 @@ vector<string> getWords(string input) {
 void main()
 {
 	string input("bib pop abcegy bobka bceop cocpc egoql");
+    cout << "Initial string : " << input <<endl;
     vector<string> words = getWords(input);
     string output = getNewString(words);
+    cout <<"New transformed string : "<< output;
 }

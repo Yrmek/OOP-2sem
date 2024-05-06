@@ -12,6 +12,10 @@
 #include <time.h>
 
 using namespace std;
+enum student_sex {
+	MALE = 0,
+	FEMALE = 1,
+};
 
 const int NAME = 10;         // количество имен в массиве
 const char* names[NAME] = { "Алекснадр", "Павел", "Константин", "Юрий", "Влад", "Виталий", "Петр", "Ольга", "Елена", "Дарья", };
@@ -20,23 +24,27 @@ const char* surnames[NAME] = { " Бубылда", " Заводской" , " Дотер", " Бревно" , 
 struct Student
 {
 	char name[50]{};
-	int age;
-	char sex;
-	int course;
-	int performance;
+	unsigned short age;
+	bool sex;
+	unsigned short course;
+	unsigned short performance;
 
 	void ShowData()
 	{
 		cout << endl;
 		int i = 0;
 		cout << "Name : " << name << endl
-			<< "Age : " << age << endl
-			<< "Sex : " << sex << endl
-			<< "Course : " << course << endl
-			<< "Performance : " << performance << endl;
+			<< "Age : " << age << endl;
+		if (this->sex == student_sex::FEMALE) cout << "Female" << endl;
+		else cout << "Male" << endl;
+		cout << "Course : " << course << endl
+		<< "Performance : " << performance << endl;
 	}
 };
 
+void loadStudentDatabase() {
+
+}
 void readFromFile(const string& fileName, vector<Student>& students, int& size) {
 	ifstream infile(fileName, ios::binary);
 	if (!infile.is_open()) {
@@ -90,11 +98,13 @@ void FillBase(const string& infilename, int amount)
 		int name = rand() % NAME;
 		strcpy_s(student.name,names[name]);
 		strcat_s(student.name, surnames[rand() % NAME]);
+		
 		student.age = rand() % 4 + 17;
-		if (name == 7 || name == 8 || name == 9) student.sex = 'f';
-		else student.sex = 'm';
+		if (name == 7 || name == 8 || name == 9) student.sex = student_sex::FEMALE;
+		else student.sex = student_sex::MALE;
 		student.course = rand() % 3 + 1;
 		student.performance = rand() % 10;
+
 		AddRecord(infilename, student);
 	}
 }
@@ -117,6 +127,7 @@ void main()
 	cout << "List of students :" << endl;
 	ViewFile("input.bin");
 	cout << "_____________________________" << endl;
+	cout << " Failing students " << endl;
 	FindFailStuds("input.bin", "output.bin", course, min_perf, stud_amount);
 	ViewFile("output.bin");
 	infile.close();
