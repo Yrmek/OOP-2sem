@@ -1,5 +1,5 @@
-//9. Записать в новую строку слова исходной строки, в которых буквы упорядочены
-//по алфавиту
+//9. Г‡Г ГЇГЁГ±Г ГІГј Гў Г­Г®ГўГіГѕ Г±ГІГ°Г®ГЄГі Г±Г«Г®ГўГ  ГЁГ±ГµГ®Г¤Г­Г®Г© Г±ГІГ°Г®ГЄГЁ, Гў ГЄГ®ГІГ®Г°Г»Гµ ГЎГіГЄГўГ» ГіГЇГ®Г°ГїГ¤Г®Г·ГҐГ­Г»
+//ГЇГ® Г Г«ГґГ ГўГЁГІГі
 
 #include <iostream>
 #include <string>
@@ -46,8 +46,10 @@ vector<string> getWords(string input)
 
 void main()
 {
-	string input("abcdefopq bib pop abcegy bobka bceop cocpc ego");
+	string input("bib pop abcegy bobka bceop cocpc egoql");
+    cout << "Initial string : " << input <<endl;
     vector<string> words = getWords(input);
     string output = getNewString(words);
-    cout << output;
+    cout <<"New transformed string : "<< output;
+
 }

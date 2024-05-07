@@ -5,7 +5,7 @@ using  namespace std;
 
 void Vector::SetSize(int s) {
     this->size = s;
-    AllocMem(s);
+    ReallocMem(s);
 }
 
 int Vector::GetSize() {
@@ -27,23 +27,23 @@ void Vector::Print() {
     cout << endl;
 }
 
-void Vector::AllocMem(int newsize) {
-    if (newsize > capacity) {
-        int newcapacity = newsize * 2;
-        int* newelements = new int[newcapacity];
-        for (int i = 0; i < size; ++i) {
-            newelements[i] = elements[i];
-        }
-        delete[] elements;
-        elements = newelements;
-        capacity = newcapacity;
+void Vector::ReallocMem(int newsize) {
+    int newcapacity = newsize * 2;
+    int* newelements = new int[newcapacity];
+    for (int i = 0; i < size; ++i) {
+        newelements[i] = elements[i];
     }
+    delete[] elements;
+    elements = newelements;
+    capacity = newcapacity;
 }
 
 void Vector::Append(int val) {
-    AllocMem(size + 1);
-    elements[size] = val;
-    size++;
+    
+    if (size + 1 > capacity) {
+        ReallocMem(size + 1);
+    }
+    elements[size++] = val;
 }
 
 int& Vector:: operator[](int index) {
@@ -66,7 +66,7 @@ istream& operator>>(istream& is, Vector& vec) {
     }
     return is;
 }
-Vector& Vector::operator=(Vector&& other) {  // оператор перемещения
+Vector& Vector::operator=(Vector&& other) noexcept {  // оператор перемещения
     if (this != &other) {
         swap(size, other.size);
         swap(capacity, other.capacity);
@@ -75,7 +75,7 @@ Vector& Vector::operator=(Vector&& other) {  // оператор перемещения
     return *this;
 }
 
-Vector& Vector::operator=(const Vector& other) {  // оператор копировния
+Vector& Vector::operator=(const Vector& other) noexcept {  // оператор копировния
     if (this != &other) {
         delete[] elements;
         size = other.size;

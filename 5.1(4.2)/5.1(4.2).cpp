@@ -30,7 +30,7 @@ int countDigits(int num) {
 }
 
 void findPalindroms(vector<bool> numbers) {
-    for (int i = 5665; i < MAXNUM; i++) {
+    for (int i = 0; i < MAXNUM; i++) {
         int revnum = 0;
         int rate = 10;
         if (i % rate == 0 && i / 10 == 0) continue;
